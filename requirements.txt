@@ -1,0 +1,26 @@
+# Direct dependencies, pinned to the exact versions installed in this venv.
+# Generated from `pip freeze` -- see requirements.lock.txt for the full
+# transitive closure (every package, including jupyter's dependency tree).
+#
+# Install:  pip install -r requirements.txt
+# Exact reproduction:  pip install -r requirements.lock.txt
+
+# Core data / numerics
+pandas==3.0.5
+numpy==2.5.1
+scipy==1.18.0
+
+# Modelling + resampling
+scikit-learn==1.9.0
+imbalanced-learn==0.14.2
+
+# Experiment tracking
+wandb==0.28.1
+
+# Config + environment
+PyYAML==6.0.3
+python-dotenv==1.2.2
+
+# Notebooks
+jupyter==1.1.1
+nbstripout==0.9.1

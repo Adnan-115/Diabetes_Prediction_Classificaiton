@@ -1,0 +1,62 @@
+# SMOTE-ENN resampling of the BRFSS 2015 Diabetes Health Indicators dataset.
+# Run:  python scripts/run_resample.py --config configs/resample_smoteenn.yaml
+
+random_seed: 42
+
+data:
+  # Kaggle: alexteboul/diabetes-health-indicators-dataset
+  # Use the *imbalanced* binary file, not the 50/50 pre-balanced one.
+  input_path: data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
+  output_path: data/processed/diabetes_binary_smoteenn.csv
+  target_column: diabetes_binary
+  # Column names are lowercased on load so the CamelCase Kaggle headers
+  # (Diabetes_binary, HighBP, ...) match the target name above.
+  normalize_columns: true
+  # Enforce the exact 22-column BRFSS 2015 binary schema. Set false only if
+  # you are deliberately feeding in a subset or a variant file.
+  strict_schema: true
+  # Optional: stratified subsample of the raw rows before resampling, for a
+  # fast smoke test. null = use all 253,680 rows (the real run).
+  # SMOTE-ENN on the full dataset is slow -- see the README timing note.
+  subsample_n: null
+
+smoteenn:
+  # Applied to the SMOTE (over-sampling) stage. "auto" == "not majority",
+  # i.e. oversample the minority class up to majority count.
+  sampling_strategy: auto
+  smote:
+    k_neighbors: 5
+  enn:
+    n_neighbors: 3
+    # "all": a sample is dropped if ANY of its n_neighbors disagree (aggressive,
+    # and what SMOTEENN uses by default). "mode": dropped on majority vote.
+    kind_sel: all
+    # ENN cleans BOTH classes by default inside SMOTEENN. Keep "all" to match
+    # that behaviour; "auto" would clean the majority class only.
+    sampling_strategy: all
+  # Parallelism for the ENN nearest-neighbour search. -1 = all cores.
+  n_jobs: -1
+
+wandb:
+  project: diabetes-brfss-ml
+  # Your W&B team/username. null -> falls back to your default entity.
+  entity: mahdi-sadman-abrar
+  run_name: smoteenn-resample
+  job_type: preprocess
+  tags:
+    - smote-enn
+    - preprocessing
+    - brfss2015
+  # Set to "disabled" to run the pipeline without touching W&B,
+  # or "offline" to log locally and sync later.
+  mode: online
+
+artifact:
+  # Sadman and Abrar pull this:
+  #   run.use_artifact("brfss-smoteenn-resampled:latest").download()
+  name: brfss-smoteenn-resampled
+  type: dataset
+  description: >-
+    BRFSS 2015 diabetes health indicators, class-balanced with SMOTE-ENN
+    (SMOTE oversampling followed by Edited Nearest Neighbours cleaning).
+    Shared so all three of us train on byte-identical data.

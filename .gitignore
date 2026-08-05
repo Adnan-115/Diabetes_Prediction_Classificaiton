@@ -22,7 +22,6 @@ env/
 !.env.example
 
 # --- Data (tracked via W&B artifacts, not git) ---
-data/raw/*
 data/processed/*
 !data/raw/.gitkeep
 !data/processed/.gitkeep

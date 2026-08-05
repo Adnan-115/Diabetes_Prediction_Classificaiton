@@ -89,20 +89,31 @@ def main(argv: list[str] | None = None) -> int:
         summary = run_resampling(config, run=run)
 
         logger.info(
-            "Done. %d rows -> %d rows in %.1fs. Output: %s",
+            "Done. Train: %d rows -> %d resampled rows in %.1fs. Holdout (raw, "
+            "untouched): %d rows. Output: %s | Holdout: %s",
             summary["n_rows_before"],
             summary["n_rows_after"],
             summary["duration_seconds"],
+            summary["n_holdout_rows"],
             summary["output_path"],
+            summary["holdout_output_path"],
         )
         artifact_name = (config.get("artifact", {}) or {}).get(
             "name", "brfss-smoteenn-resampled"
         )
+        holdout_artifact_name = (config.get("holdout_artifact", {}) or {}).get(
+            "name", "brfss-holdout-test"
+        )
         if mode != "disabled":
             logger.info(
-                'Teammates can now pull it with: '
+                'Teammates can now pull training data with: '
                 'run.use_artifact("%s:latest").download()',
                 artifact_name,
+            )
+            logger.info(
+                'For headline metrics, evaluate on the RAW holdout set instead: '
+                'run.use_artifact("%s:latest").download()',
+                holdout_artifact_name,
             )
         return 0
 

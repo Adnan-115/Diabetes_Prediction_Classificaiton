@@ -8,6 +8,12 @@ data:
   # Use the *imbalanced* binary file, not the 50/50 pre-balanced one.
   input_path: data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
   output_path: data/processed/diabetes_binary_smoteenn.csv
+  # Stratified slice of RAW rows, split off BEFORE SMOTE-ENN runs. Untouched
+  # real data -- this is what headline metrics should be evaluated on, never
+  # the resampled file (see README "A caveat worth knowing").
+  holdout_output_path: data/processed/diabetes_binary_holdout_test.csv
+  # Fraction of rows held out for that raw test set.
+  test_size: 0.2
   target_column: diabetes_binary
   # Column names are lowercased on load so the CamelCase Kaggle headers
   # (Diabetes_binary, HighBP, ...) match the target name above.
@@ -15,8 +21,8 @@ data:
   # Enforce the exact 22-column BRFSS 2015 binary schema. Set false only if
   # you are deliberately feeding in a subset or a variant file.
   strict_schema: true
-  # Optional: stratified subsample of the raw rows before resampling, for a
-  # fast smoke test. null = use all 253,680 rows (the real run).
+  # Optional: stratified subsample of the raw rows before the split/resample,
+  # for a fast smoke test. null = use all 253,680 rows (the real run).
   # SMOTE-ENN on the full dataset is slow -- see the README timing note.
   subsample_n: null
 
@@ -52,11 +58,24 @@ wandb:
   mode: online
 
 artifact:
-  # Sadman and Abrar pull this:
+  # Sadman and Abrar pull this to TRAIN on:
   #   run.use_artifact("brfss-smoteenn-resampled:latest").download()
   name: brfss-smoteenn-resampled
   type: dataset
   description: >-
-    BRFSS 2015 diabetes health indicators, class-balanced with SMOTE-ENN
-    (SMOTE oversampling followed by Edited Nearest Neighbours cleaning).
-    Shared so all three of us train on byte-identical data.
+    BRFSS 2015 diabetes health indicators TRAIN split, class-balanced with
+    SMOTE-ENN (SMOTE oversampling followed by Edited Nearest Neighbours
+    cleaning). Do not report headline metrics on this data -- it contains
+    synthetic rows and has had borderline real rows removed. Use the
+    brfss-holdout-test artifact for evaluation instead.
+
+holdout_artifact:
+  # Sadman and Abrar pull this to EVALUATE on (headline numbers):
+  #   run.use_artifact("brfss-holdout-test:latest").download()
+  name: brfss-holdout-test
+  type: dataset
+  description: >-
+    Untouched raw BRFSS 2015 rows (no SMOTE, no ENN), split off before
+    resampling. This is the shared evaluation set -- report headline metrics
+    against this, not the resampled training data, so results are comparable
+    across all three of us.

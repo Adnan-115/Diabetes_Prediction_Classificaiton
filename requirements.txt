@@ -13,6 +13,11 @@ scipy==1.18.0
 # Modelling + resampling
 scikit-learn==1.9.0
 imbalanced-learn==0.14.2
+xgboost==3.4.0
+lightgbm==4.7.0
+
+# Plotting
+matplotlib==3.11.1
 
 # Experiment tracking
 wandb==0.28.1

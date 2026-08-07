@@ -1,0 +1,121 @@
+2026-08-07 19:46:09,714 [INFO] ======================================================================
+2026-08-07 19:46:09,714 [INFO] PHASE 1: IN-FOLD NESTED DATA PREPARATION & SHARED FOLD CACHING
+2026-08-07 19:46:09,714 [INFO] ======================================================================
+2026-08-07 19:46:09,987 [INFO] Loaded Dataset: Train=(202944, 21), Holdout=(50736, 21)
+2026-08-07 19:46:09,987 [INFO] Train Positive Rate: 0.1393, Holdout Positive Rate: 0.1393
+2026-08-07 19:46:21,506 [INFO]   Fold 1/5 processed: MI Top10=['genhlth', 'highbp', 'highchol']... | RFE Top10=[np.str_('highbp'), np.str_('highchol'), np.str_('cholcheck')]...
+2026-08-07 19:46:31,570 [INFO]   Fold 2/5 processed: MI Top10=['genhlth', 'highbp', 'physactivity']... | RFE Top10=[np.str_('highbp'), np.str_('highchol'), np.str_('cholcheck')]...
+2026-08-07 19:46:41,712 [INFO]   Fold 3/5 processed: MI Top10=['genhlth', 'highbp', 'anyhealthcare']... | RFE Top10=[np.str_('highbp'), np.str_('highchol'), np.str_('cholcheck')]...
+2026-08-07 19:46:51,680 [INFO]   Fold 4/5 processed: MI Top10=['genhlth', 'highbp', 'highchol']... | RFE Top10=[np.str_('highbp'), np.str_('highchol'), np.str_('cholcheck')]...
+2026-08-07 19:47:01,727 [INFO]   Fold 5/5 processed: MI Top10=['genhlth', 'highbp', 'physactivity']... | RFE Top10=[np.str_('highbp'), np.str_('highchol'), np.str_('cholcheck')]...
+2026-08-07 19:47:01,728 [INFO] All 6 Feature Groups cached across 5 folds in RAM in 51.71s!
+2026-08-07 19:47:01,746 [INFO] ======================================================================
+2026-08-07 19:47:01,746 [INFO] PHASE 2: 6 FEATURE GROUPS x 5 MODEL FAMILIES OPTUNA TUNING (60 Trials/Model)
+2026-08-07 19:47:01,747 [INFO] ======================================================================
+2026-08-07 19:47:01,747 [INFO] ------------------------------------------------------------
+2026-08-07 19:47:01,747 [INFO] [1/6] TUNING FEATURE GROUP: BIOLOGICAL (Cols: 8)
+2026-08-07 19:47:01,747 [INFO] ------------------------------------------------------------
+2026-08-07 19:47:01,747 [INFO]   --> [1/5] Optimizing XGBOOST (biological)...
+2026-08-07 19:50:52,932 [INFO]     -> XGBOOST (biological) Complete | Mean 5-Fold PR-AUC: 0.3779 (+/- 0.0065)
+2026-08-07 19:50:52,933 [INFO]   --> [2/5] Optimizing LIGHTGBM (biological)...
+2026-08-07 19:53:46,006 [INFO]     -> LIGHTGBM (biological) Complete | Mean 5-Fold PR-AUC: 0.3791 (+/- 0.0076)
+2026-08-07 19:53:46,007 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (biological)...
+2026-08-07 19:54:34,302 [INFO]     -> LOGISTIC_REGRESSION (biological) Complete | Mean 5-Fold PR-AUC: 0.3585 (+/- 0.0025)
+2026-08-07 19:54:34,302 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (biological)...
+2026-08-07 20:09:05,214 [INFO]     -> RANDOM_FOREST (biological) Complete | Mean 5-Fold PR-AUC: 0.3639 (+/- 0.0059)
+2026-08-07 20:09:05,215 [INFO]   --> [5/5] Optimizing KNN (biological)...
+2026-08-07 20:23:20,591 [INFO]     -> KNN (biological) Complete | Mean 5-Fold PR-AUC: 0.3335 (+/- 0.0020)
+2026-08-07 20:23:20,592 [INFO] ------------------------------------------------------------
+2026-08-07 20:23:20,592 [INFO] [2/6] TUNING FEATURE GROUP: SOCIOECONOMIC (Cols: 4)
+2026-08-07 20:23:20,592 [INFO] ------------------------------------------------------------
+2026-08-07 20:23:20,592 [INFO]   --> [1/5] Optimizing XGBOOST (socioeconomic)...
+2026-08-07 20:26:11,669 [INFO]     -> XGBOOST (socioeconomic) Complete | Mean 5-Fold PR-AUC: 0.2128 (+/- 0.0023)
+2026-08-07 20:26:11,669 [INFO]   --> [2/5] Optimizing LIGHTGBM (socioeconomic)...
+2026-08-07 20:27:58,368 [INFO]     -> LIGHTGBM (socioeconomic) Complete | Mean 5-Fold PR-AUC: 0.2128 (+/- 0.0019)
+2026-08-07 20:27:58,369 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (socioeconomic)...
+2026-08-07 20:28:20,339 [INFO]     -> LOGISTIC_REGRESSION (socioeconomic) Complete | Mean 5-Fold PR-AUC: 0.2174 (+/- 0.0009)
+2026-08-07 20:28:20,340 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (socioeconomic)...
+2026-08-07 20:41:52,536 [INFO]     -> RANDOM_FOREST (socioeconomic) Complete | Mean 5-Fold PR-AUC: 0.2131 (+/- 0.0017)
+2026-08-07 20:41:52,536 [INFO]   --> [5/5] Optimizing KNN (socioeconomic)...
+2026-08-07 21:09:09,152 [INFO]     -> KNN (socioeconomic) Complete | Mean 5-Fold PR-AUC: 0.2018 (+/- 0.0025)
+2026-08-07 21:09:09,153 [INFO] ------------------------------------------------------------
+2026-08-07 21:09:09,153 [INFO] [3/6] TUNING FEATURE GROUP: LIFESTYLE (Cols: 9)
+2026-08-07 21:09:09,153 [INFO] ------------------------------------------------------------
+2026-08-07 21:09:09,153 [INFO]   --> [1/5] Optimizing XGBOOST (lifestyle)...
+2026-08-07 21:12:48,269 [INFO]     -> XGBOOST (lifestyle) Complete | Mean 5-Fold PR-AUC: 0.2976 (+/- 0.0034)
+2026-08-07 21:12:48,270 [INFO]   --> [2/5] Optimizing LIGHTGBM (lifestyle)...
+2026-08-07 21:15:17,005 [INFO]     -> LIGHTGBM (lifestyle) Complete | Mean 5-Fold PR-AUC: 0.2975 (+/- 0.0045)
+2026-08-07 21:15:17,005 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (lifestyle)...
+2026-08-07 21:16:25,912 [INFO]     -> LOGISTIC_REGRESSION (lifestyle) Complete | Mean 5-Fold PR-AUC: 0.3073 (+/- 0.0034)
+2026-08-07 21:16:25,912 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (lifestyle)...
+2026-08-07 21:24:56,664 [INFO]     -> RANDOM_FOREST (lifestyle) Complete | Mean 5-Fold PR-AUC: 0.2974 (+/- 0.0036)
+2026-08-07 21:24:56,664 [INFO]   --> [5/5] Optimizing KNN (lifestyle)...
+2026-08-07 21:44:36,325 [INFO]     -> KNN (lifestyle) Complete | Mean 5-Fold PR-AUC: 0.2584 (+/- 0.0032)
+2026-08-07 21:44:36,325 [INFO] ------------------------------------------------------------
+2026-08-07 21:44:36,325 [INFO] [4/6] TUNING FEATURE GROUP: COMBINED_ALL (Cols: 21)
+2026-08-07 21:44:36,325 [INFO] ------------------------------------------------------------
+2026-08-07 21:44:36,325 [INFO]   --> [1/5] Optimizing XGBOOST (combined_all)...
+2026-08-07 21:49:54,094 [INFO]     -> XGBOOST (combined_all) Complete | Mean 5-Fold PR-AUC: 0.4196 (+/- 0.0074)
+2026-08-07 21:49:54,094 [INFO]   --> [2/5] Optimizing LIGHTGBM (combined_all)...
+2026-08-07 21:52:37,333 [INFO]     -> LIGHTGBM (combined_all) Complete | Mean 5-Fold PR-AUC: 0.4212 (+/- 0.0067)
+2026-08-07 21:52:37,334 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (combined_all)...
+2026-08-07 21:54:07,337 [INFO]     -> LOGISTIC_REGRESSION (combined_all) Complete | Mean 5-Fold PR-AUC: 0.4051 (+/- 0.0039)
+2026-08-07 21:54:07,337 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (combined_all)...
+2026-08-07 22:18:24,401 [INFO]     -> RANDOM_FOREST (combined_all) Complete | Mean 5-Fold PR-AUC: 0.4100 (+/- 0.0061)
+2026-08-07 22:18:24,401 [INFO]   --> [5/5] Optimizing KNN (combined_all)...
+2026-08-07 22:52:18,052 [INFO]     -> KNN (combined_all) Complete | Mean 5-Fold PR-AUC: 0.3734 (+/- 0.0037)
+2026-08-07 22:52:18,053 [INFO] ------------------------------------------------------------
+2026-08-07 22:52:18,053 [INFO] [5/6] TUNING FEATURE GROUP: HYBRID_MI (Cols: 10)
+2026-08-07 22:52:18,053 [INFO] ------------------------------------------------------------
+2026-08-07 22:52:18,053 [INFO]   --> [1/5] Optimizing XGBOOST (hybrid_mi)...
+2026-08-07 22:55:38,201 [INFO]     -> XGBOOST (hybrid_mi) Complete | Mean 5-Fold PR-AUC: 0.4072 (+/- 0.0126)
+2026-08-07 22:55:38,201 [INFO]   --> [2/5] Optimizing LIGHTGBM (hybrid_mi)...
+2026-08-07 22:58:08,637 [INFO]     -> LIGHTGBM (hybrid_mi) Complete | Mean 5-Fold PR-AUC: 0.4084 (+/- 0.0127)
+2026-08-07 22:58:08,637 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (hybrid_mi)...
+2026-08-07 22:58:50,486 [INFO]     -> LOGISTIC_REGRESSION (hybrid_mi) Complete | Mean 5-Fold PR-AUC: 0.3950 (+/- 0.0065)
+2026-08-07 22:58:50,487 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (hybrid_mi)...
+2026-08-07 23:12:11,011 [INFO]     -> RANDOM_FOREST (hybrid_mi) Complete | Mean 5-Fold PR-AUC: 0.4005 (+/- 0.0120)
+2026-08-07 23:12:11,011 [INFO]   --> [5/5] Optimizing KNN (hybrid_mi)...
+2026-08-07 23:34:24,442 [INFO]     -> KNN (hybrid_mi) Complete | Mean 5-Fold PR-AUC: 0.3671 (+/- 0.0140)
+2026-08-07 23:34:24,442 [INFO] ------------------------------------------------------------
+2026-08-07 23:34:24,442 [INFO] [6/6] TUNING FEATURE GROUP: HYBRID_RFE (Cols: 10)
+2026-08-07 23:34:24,442 [INFO] ------------------------------------------------------------
+2026-08-07 23:34:24,442 [INFO]   --> [1/5] Optimizing XGBOOST (hybrid_rfe)...
+2026-08-07 23:39:24,416 [INFO]     -> XGBOOST (hybrid_rfe) Complete | Mean 5-Fold PR-AUC: 0.4180 (+/- 0.0082)
+2026-08-07 23:39:24,417 [INFO]   --> [2/5] Optimizing LIGHTGBM (hybrid_rfe)...
+2026-08-07 23:42:05,968 [INFO]     -> LIGHTGBM (hybrid_rfe) Complete | Mean 5-Fold PR-AUC: 0.4191 (+/- 0.0066)
+2026-08-07 23:42:05,968 [INFO]   --> [3/5] Optimizing LOGISTIC_REGRESSION (hybrid_rfe)...
+2026-08-07 23:42:55,152 [INFO]     -> LOGISTIC_REGRESSION (hybrid_rfe) Complete | Mean 5-Fold PR-AUC: 0.4039 (+/- 0.0042)
+2026-08-07 23:42:55,152 [INFO]   --> [4/5] Optimizing RANDOM_FOREST (hybrid_rfe)...
+2026-08-07 23:57:59,384 [INFO]     -> RANDOM_FOREST (hybrid_rfe) Complete | Mean 5-Fold PR-AUC: 0.4099 (+/- 0.0070)
+2026-08-07 23:57:59,384 [INFO]   --> [5/5] Optimizing KNN (hybrid_rfe)...
+2026-08-08 00:21:52,945 [INFO]     -> KNN (hybrid_rfe) Complete | Mean 5-Fold PR-AUC: 0.3849 (+/- 0.0023)
+2026-08-08 00:21:52,946 [INFO] ======================================================================
+2026-08-08 00:21:52,946 [INFO] PHASE 3: MULTI-CRITERIA STATISTICAL COMPARISON & GROUP RANKING
+2026-08-08 00:21:52,946 [INFO] ======================================================================
+2026-08-08 00:21:52,946 [INFO] Group: biological      | Best: lightgbm     | PR-AUC: 0.3791 (+/- 0.0076) | Feats:  8 | Cohen's dz: -8.39 | p-val: 0.0625 | Parsimony Index: 0.6143
+2026-08-08 00:21:52,947 [INFO] Group: socioeconomic   | Best: logistic_regression | PR-AUC: 0.2174 (+/- 0.0009) | Feats:  4 | Cohen's dz: -24.86 | p-val: 0.0625 | Parsimony Index: 0.4981
+2026-08-08 00:21:52,947 [INFO] Group: lifestyle       | Best: logistic_regression | PR-AUC: 0.3073 (+/- 0.0034) | Feats:  9 | Cohen's dz: -15.05 | p-val: 0.0625 | Parsimony Index: 0.4694
+2026-08-08 00:21:52,963 [INFO] Group: combined_all    | Best: lightgbm     | PR-AUC: 0.4212 (+/- 0.0067) | Feats: 21 | Cohen's dz: +0.00 | p-val: 1.0000 | Parsimony Index: 0.4212
+2026-08-08 00:21:52,964 [INFO] Group: hybrid_mi       | Best: lightgbm     | PR-AUC: 0.4084 (+/- 0.0127) | Feats: 10 | Cohen's dz: -1.79 | p-val: 0.0625 | Parsimony Index: 0.5918
+2026-08-08 00:21:52,964 [INFO] Group: hybrid_rfe      | Best: lightgbm     | PR-AUC: 0.4191 (+/- 0.0066) | Feats: 10 | Cohen's dz: -0.50 | p-val: 0.4375 | Parsimony Index: 0.6074
+2026-08-08 00:21:52,964 [INFO] 
+Feature Group Champion: COMBINED_ALL (PR-AUC = 0.4212)
+2026-08-08 00:21:52,964 [INFO] ======================================================================
+2026-08-08 00:21:52,964 [INFO] PHASE 4: DOUBLE META-LEARNER STACKING (DESIGN A vs. DESIGN B)
+2026-08-08 00:21:52,964 [INFO] ======================================================================
+2026-08-08 00:21:52,969 [INFO] Design A Stacking Matrix Shape: (202944, 5) (5 Base Algorithms on combined_all)
+2026-08-08 00:21:52,969 [INFO] Design B Stacking Matrix Shape: (202944, 6) (6 Feature-Group Champions)
+2026-08-08 00:21:55,094 [INFO] Meta-Learner Design A (Homogeneous)   | OOF PR-AUC: 0.4300 | tau*: 0.23 | OOF F1: 0.4690
+2026-08-08 00:21:55,095 [INFO] Meta-Learner Design B (Heterogeneous) | OOF PR-AUC: 0.4274 | tau*: 0.18 | OOF F1: 0.4676
+2026-08-08 00:21:55,099 [INFO] Design B Meta-Coefficients (Domain Importance Weights): {'biological': np.float32(2.5148), 'socioeconomic': np.float32(0.7838), 'lifestyle': np.float32(2.2194), 'combined_all': np.float32(1.3133), 'hybrid_mi': np.float32(-0.5415), 'hybrid_rfe': np.float32(1.5934)}
+2026-08-08 00:21:55,099 [INFO] ======================================================================
+2026-08-08 00:21:55,099 [INFO] PHASE 5: OUTER FULL-FIT & FINAL 20% HOLDOUT EVALUATION (N=50,736)
+2026-08-08 00:21:55,099 [INFO] ======================================================================
+2026-08-08 00:22:46,315 [INFO] ------------------------------------------------------------
+2026-08-08 00:22:46,315 [INFO] FINAL 20% HOLDOUT PERFORMANCE COMPARISON:
+2026-08-08 00:22:46,315 [INFO]   Single Champion (COMBINED_ALL - LIGHTGBM)          | PR-AUC: 0.4084 | ROC-AUC: 0.8223 | F1 (tau*=0.28): 0.4607 | Recall: 0.6251
+2026-08-08 00:22:46,316 [INFO]   Design A Meta-Learner (Homogeneous - COMBINED_ALL) | PR-AUC: 0.4158 | ROC-AUC: 0.8244 | F1 (tau*=0.23): 0.4660 | Recall: 0.6124
+2026-08-08 00:22:46,316 [INFO]   Design B Meta-Learner (Heterogeneous Feature Diversity) | PR-AUC: 0.4127 | ROC-AUC: 0.8232 | F1 (tau*=0.18): 0.4636 | Recall: 0.6363
+2026-08-08 00:22:46,316 [INFO] ------------------------------------------------------------
+2026-08-08 00:22:46,318 [INFO] Successfully exported final results to notebooks\abrar\artifacts\feature_groups_evaluation.json!

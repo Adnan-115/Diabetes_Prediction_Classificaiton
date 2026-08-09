@@ -690,7 +690,7 @@ def run_feature_group_ablation_and_stacking():
         "eval_meta_learner_design_b": eval_meta_B,
     }
     
-    artifact_path = Path("notebooks/abrar/artifacts/feature_groups_evaluation.json")
+    artifact_path = Path("notebooks/abrar/results/feature_groups_evaluation.json")
     artifact_path.parent.mkdir(parents=True, exist_ok=True)
     with open(artifact_path, "w") as f:
         json.dump(final_artifact, f, indent=2)

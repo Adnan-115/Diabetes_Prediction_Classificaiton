@@ -1,0 +1,33 @@
+{
+  "model_name": "lightgbm",
+  "best_params": {
+    "n_estimators": 450,
+    "num_leaves": 22,
+    "max_depth": 10,
+    "learning_rate": 0.07474458568916661,
+    "subsample": 0.65,
+    "colsample_bytree": 0.6,
+    "min_child_samples": 60,
+    "reg_alpha": 0.04203564571427274,
+    "reg_lambda": 0.30390066574076924
+  },
+  "tau_star": 0.29,
+  "holdout_pr_auc": 0.40896560765237017,
+  "holdout_roc_auc": 0.8223370396921365,
+  "f1_default": 0.32109737248840803,
+  "precision_default": 0.5062442887602803,
+  "recall_default": 0.2351110482387891,
+  "f1_calibrated": 0.46181229773462784,
+  "precision_calibrated": 0.3732019876209572,
+  "recall_calibrated": 0.6056019238930542,
+  "confusion_matrix": [
+    [
+      36477,
+      7190
+    ],
+    [
+      2788,
+      4281
+    ]
+  ]
+}

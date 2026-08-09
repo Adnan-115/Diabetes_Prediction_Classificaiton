@@ -73,7 +73,7 @@ plt.rcParams['figure.dpi'] = 120
 
 # Resolve Paths
 REPO_ROOT = Path.cwd().parent.parent if Path.cwd().name == 'abrar' else Path.cwd()
-ARTIFACTS_DIR = REPO_ROOT / 'notebooks' / 'abrar' / 'artifacts'
+ARTIFACTS_DIR = REPO_ROOT / 'notebooks' / 'abrar' / 'results'
 RESULTS_PATH = ARTIFACTS_DIR / 'feature_groups_evaluation.json'
 
 print(f"Repository Root: {REPO_ROOT.resolve()}")

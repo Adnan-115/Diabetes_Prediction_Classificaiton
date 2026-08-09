@@ -31,7 +31,7 @@ plt.rcParams['figure.dpi'] = 200
 
 # Paths
 REPO_ROOT = Path("d:/ML Project/diabetes-brfss-ml")
-ARTIFACTS_DIR = REPO_ROOT / "notebooks" / "abrar" / "artifacts"
+ARTIFACTS_DIR = REPO_ROOT / "notebooks" / "abrar" / "results"
 PLOTS_DIR = ARTIFACTS_DIR / "pdf_figures"
 PLOTS_DIR.mkdir(parents=True, exist_ok=True)
 JSON_PATH = ARTIFACTS_DIR / "feature_groups_evaluation.json"

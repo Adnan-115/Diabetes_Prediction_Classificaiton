@@ -7,7 +7,7 @@ data:
   # Kaggle: alexteboul/diabetes-health-indicators-dataset
   # Use the *imbalanced* binary file, not the 50/50 pre-balanced one.
   input_path: data/raw/diabetes_binary_health_indicators_BRFSS2015.csv
-  output_path: data/processed/diabetes_binary_smoteenn.csv
+  output_path: data/processed/diabetes_binary_smotenc_enn.csv
   # Stratified slice of RAW rows, split off BEFORE SMOTE-ENN runs. Untouched
   # real data -- this is what headline metrics should be evaluated on, never
   # the resampled file (see README "A caveat worth knowing").
@@ -27,9 +27,33 @@ data:
   subsample_n: null
 
 smoteenn:
-  # Applied to the SMOTE (over-sampling) stage. "auto" == "not majority",
+  # Applied to the SMOTENC (over-sampling) stage. "auto" == "not majority",
   # i.e. oversample the minority class up to majority count.
   sampling_strategy: auto
+  # All BRFSS predictors except BMI are binary, ordinal, or count categories.
+  # SMOTENC keeps these values valid while treating BMI as the sole continuous
+  # predictor. It requires at least one continuous feature.
+  categorical_features:
+    - highbp
+    - highchol
+    - cholcheck
+    - smoker
+    - stroke
+    - heartdiseaseorattack
+    - physactivity
+    - fruits
+    - veggies
+    - hvyalcoholconsump
+    - anyhealthcare
+    - nodocbccost
+    - genhlth
+    - menthlth
+    - physhlth
+    - diffwalk
+    - sex
+    - age
+    - education
+    - income
   smote:
     k_neighbors: 5
   enn:
@@ -64,8 +88,8 @@ artifact:
   type: dataset
   description: >-
     BRFSS 2015 diabetes health indicators TRAIN split, class-balanced with
-    SMOTE-ENN (SMOTE oversampling followed by Edited Nearest Neighbours
-    cleaning). Do not report headline metrics on this data -- it contains
+    SMOTENC oversampling followed by Edited Nearest Neighbours cleaning. Do not
+    report headline metrics on this data -- it contains
     synthetic rows and has had borderline real rows removed. Use the
     brfss-holdout-test artifact for evaluation instead.
 

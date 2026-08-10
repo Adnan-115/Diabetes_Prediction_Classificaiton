@@ -7,7 +7,7 @@
 
 # Core data / numerics
 pandas==3.0.5
-numpy==2.5.1
+numpy==2.4.6
 scipy==1.18.0
 
 # Modelling + resampling
@@ -18,6 +18,10 @@ lightgbm==4.7.0
 
 # Plotting
 matplotlib==3.11.1
+seaborn==0.13.2
+
+# Explainability
+shap==0.52.0
 
 # Experiment tracking
 wandb==0.28.1

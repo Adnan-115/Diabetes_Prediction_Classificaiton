@@ -1,4 +1,4 @@
-"""Config-driven SMOTE-ENN resampling, with W&B logging and artifact upload.
+"""Config-driven SMOTENC + ENN resampling, with W&B logging and artifact upload.
 
 The entrypoint is `run_resampling(config, run)`, called by
 `scripts/run_resample.py`. That script owns the `wandb.init()` /
@@ -16,8 +16,7 @@ from typing import Any
 import pandas as pd
 import wandb
 import yaml
-from imblearn.combine import SMOTEENN
-from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import SMOTENC
 from imblearn.under_sampling import EditedNearestNeighbours
 from sklearn.model_selection import train_test_split
 
@@ -43,13 +42,14 @@ def load_config(config_path: str | Path) -> dict[str, Any]:
     return config
 
 
-def build_smoteenn(config: dict[str, Any], seed: int) -> SMOTEENN:
-    """Construct SMOTEENN from config.
+def build_resamplers(
+    config: dict[str, Any], seed: int
+) -> tuple[SMOTENC, EditedNearestNeighbours]:
+    """Construct the categorical-aware oversampler and ENN cleaner.
 
-    Note: when `smote=` / `enn=` are passed explicitly, imbalanced-learn clones
-    them as-is and SMOTEENN's own `sampling_strategy` and `random_state` are
-    *not* propagated into them. So we set those on the sub-estimators here --
-    otherwise the config's sampling_strategy and seed would silently do nothing.
+    SMOTENC creates valid category values while interpolating only continuous
+    columns. ENN is applied separately afterwards so the two-stage process is
+    explicit and each estimator receives its configured parameters directly.
     """
     cfg = config.get("smoteenn", {}) or {}
     smote_cfg = cfg.get("smote", {}) or {}
@@ -58,7 +58,14 @@ def build_smoteenn(config: dict[str, Any], seed: int) -> SMOTEENN:
     sampling_strategy = cfg.get("sampling_strategy", "auto")
     n_jobs = cfg.get("n_jobs", -1)
 
-    smote = SMOTE(
+    categorical_features = cfg.get("categorical_features", [])
+    if not categorical_features:
+        raise ValueError(
+            "config['smoteenn']['categorical_features'] is required for SMOTENC."
+        )
+
+    smote = SMOTENC(
+        categorical_features=categorical_features,
         sampling_strategy=sampling_strategy,
         random_state=seed,
         k_neighbors=smote_cfg.get("k_neighbors", 5),
@@ -70,12 +77,7 @@ def build_smoteenn(config: dict[str, Any], seed: int) -> SMOTEENN:
         kind_sel=enn_cfg.get("kind_sel", "all"),
         n_jobs=n_jobs,
     )
-    return SMOTEENN(
-        sampling_strategy=sampling_strategy,
-        random_state=seed,
-        smote=smote,
-        enn=enn,
-    )
+    return smote, enn
 
 
 def _maybe_subsample(
@@ -212,7 +214,7 @@ def _split_holdout(
 
 
 def run_resampling(config: dict[str, Any], run: Any = None) -> dict[str, Any]:
-    """Load -> validate -> hold out a raw test slice -> SMOTE-ENN the rest ->
+    """Load -> validate -> hold out a raw test slice -> SMOTENC + ENN the rest ->
     save both CSVs -> log to W&B.
 
     Args:
@@ -274,17 +276,18 @@ def run_resampling(config: dict[str, Any], run: Any = None) -> dict[str, Any]:
         before.to_string(index=False),
     )
 
-    sampler = build_smoteenn(config, seed)
+    smote, enn = build_resamplers(config, seed)
     logger.info(
-        "Fitting SMOTE-ENN on %d training rows -- this is the slow step, "
-        "the ENN pass does a kNN search over the whole oversampled set. "
+        "Fitting SMOTENC + ENN on %d training rows -- this is the slow step, "
+        "and the ENN pass does a kNN search over the oversampled set. "
         "The holdout set above is excluded from this entirely.",
         len(X),
     )
     started = time.perf_counter()
-    X_res, y_res = sampler.fit_resample(X, y)
+    X_smote, y_smote = smote.fit_resample(X, y)
+    X_res, y_res = enn.fit_resample(X_smote, y_smote)
     elapsed = time.perf_counter() - started
-    logger.info("SMOTE-ENN finished in %.1fs.", elapsed)
+    logger.info("SMOTENC + ENN finished in %.1fs.", elapsed)
 
     # fit_resample returns numpy arrays (imbalanced-learn runs check_X_y
     # internally), so rebuild the frame with the original column names.

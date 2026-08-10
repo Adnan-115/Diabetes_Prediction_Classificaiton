@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Entrypoint for the SMOTE-ENN resampling step.
+"""Entrypoint for the SMOTENC + ENN resampling step.
 
     python scripts/run_resample.py --config configs/resample_smoteenn.yaml
 
@@ -30,7 +30,7 @@ logger = logging.getLogger("run_resample")
 
 def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Apply SMOTE-ENN resampling to the BRFSS 2015 diabetes dataset "
+        description="Apply SMOTENC + ENN resampling to the BRFSS 2015 diabetes dataset "
         "and publish the result as a W&B artifact."
     )
     parser.add_argument(
